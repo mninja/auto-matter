@@ -88,14 +88,21 @@ public final class AutoMatterProcessor extends AbstractProcessor {
 
     CollectionProcessor collectionProcessor = new CollectionProcessor(this);
     OptionalProcessor optionalProcessor = new OptionalProcessor();
+    VavrOptionProcessor optionProcessor = new VavrOptionProcessor();
+    VavrCollectionProcessor vavrCollectionProcessor = new VavrCollectionProcessor(this);
 
-    processors = ImmutableMap.of(
-      "java.util.Map", collectionProcessor,
-      "java.util.List", collectionProcessor,
-      "java.util.Set", collectionProcessor,
-      "java.util.Optional", optionalProcessor,
-      "com.google.common.base.Optional", optionalProcessor
-    );
+    processors = ImmutableMap.<String, FieldProcessor>builder()
+      .put("java.util.Map", collectionProcessor)
+      .put("java.util.List", collectionProcessor)
+      .put("java.util.Set", collectionProcessor)
+      .put("java.util.Optional", optionalProcessor)
+      .put("com.google.common.base.Optional", optionalProcessor)
+      .put("io.vavr.control.Option", optionProcessor)
+      .put("io.vavr.collection.Map", vavrCollectionProcessor)
+      .put("io.vavr.collection.Set", vavrCollectionProcessor)
+      .put("io.vavr.collection.Array", vavrCollectionProcessor)
+      .put("io.vavr.collection.List", vavrCollectionProcessor)
+      .build();
   }
 
   @Override

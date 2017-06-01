@@ -158,6 +158,16 @@ public class AutoMatterProcessorTest {
   }
 
   @Test
+  public void testVavrOptionFields() {
+    assert_().about(javaSource())
+        .that(JavaFileObjects.forResource("good/VavrOptionFields.java"))
+        .processedWith(new AutoMatterProcessor())
+        .compilesWithoutError()
+        .and().generatesSources(
+        JavaFileObjects.forResource("expected/VavrOptionFieldsBuilder.java"));
+  }
+
+  @Test
   public void testJUTOptionalFields() {
     Assume.assumeTrue(hasJutOptional());
     assert_().about(javaSource())
